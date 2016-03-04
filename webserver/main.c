@@ -10,6 +10,7 @@
 #include "socket.h"
 int main(void){
 	int socket_serveur=creer_serveur(8080);
+	initialiser_signaux();
 	char *buf = malloc(sizeof(char)*80);
 	int socket_client;
 	while (1) {

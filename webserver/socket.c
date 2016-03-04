@@ -24,3 +24,9 @@ if ( bind ( socket_serveur , ( struct sockaddr *)& saddr , sizeof ( saddr )) == 
 
 return socket_serveur;
 }
+
+void initialiser_signaux(void){
+if(signal(SIGPIPE, SIG_IGN)==SIG_ERR){
+	perror("signal");
+}
+}
