@@ -7,6 +7,9 @@ int socket_serveur = socket ( AF_INET , SOCK_STREAM , 0);
 		perror ( " socket_serveur " );
 		/* traitement de l ’ erreur */
 	}
+int optval = 1;
+if ( setsockopt ( socket_serveur , SOL_SOCKET , SO_REUSEADDR , & optval , sizeof ( int )) == -1)
+		perror ( " Can not set SO_REUSEADDR option " );
 struct sockaddr_in saddr ;
 	saddr.sin_family = AF_INET ; /* Socket ipv4 */
 	saddr.sin_port = htons (port); /* Port d ’ écoute */
