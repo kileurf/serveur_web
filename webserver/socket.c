@@ -1,4 +1,5 @@
 #include "socket.h"
+#include <sys/wait.h>
 #include <signal.h>
 
 int creer_serveur(int port){
@@ -26,7 +27,25 @@ return socket_serveur;
 }
 
 void initialiser_signaux(void){
-if(signal(SIGPIPE, SIG_IGN)==SIG_ERR){
+/*if(signal(SIGPIPE, SIG_IGN)==SIG_ERR){
 	perror("signal");
+}*/
+struct sigaction sa;
+
+sa.sa_handler = traitement_signal;
+ sigemptyset(&sa.sa_mask);
+ sa.sa_flags = SA_RESTART;
+ if (sigaction(SIGCHLD , &sa, NULL) == -1) {
+perror("sigaction(SIGCHLD)");
+
 }
 }
+
+void traitement_signal(int sig){
+
+	if(waitpid(-1,NULL,WNOHANG) > 0){
+		printf("Signal %d reçu\n", sig);
+	}
+}
+
+
